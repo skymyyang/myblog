@@ -79,19 +79,22 @@
 
 
 
-<meta name="description" content="Nginx配置详解Nginx介绍Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP&#x2F;POP3&#x2F;SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。Nginx 是增长最快的 Web 服务器，市场份额已达 33.3％。全球使用量排名第二，2011 年成立商业公司。 Nginx 分支  Openresty：作者 @age">
+<meta name="description" content="Nginx配置详解 Nginx介绍Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP&#x2F;POP3&#x2F;SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。Nginx 是增长最快的 Web 服务器，市场份额已达 33.3％。全球使用量排名第二，2011 年成立商业公司。 Nginx 分支  Openresty：作者 @ag">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NginxConfig">
 <meta property="og:url" content="https://ihere.io/2020/03/20/NginxConfig/index.html">
 <meta property="og:site_name" content="ihere.io">
-<meta property="og:description" content="Nginx配置详解Nginx介绍Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP&#x2F;POP3&#x2F;SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。Nginx 是增长最快的 Web 服务器，市场份额已达 33.3％。全球使用量排名第二，2011 年成立商业公司。 Nginx 分支  Openresty：作者 @age">
+<meta property="og:description" content="Nginx配置详解 Nginx介绍Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP&#x2F;POP3&#x2F;SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。Nginx 是增长最快的 Web 服务器，市场份额已达 33.3％。全球使用量排名第二，2011 年成立商业公司。 Nginx 分支  Openresty：作者 @ag">
+<meta property="og:image" content="https://ihere.io/images/nginx-confg-no1.png">
 <meta property="og:image" content="https://ihere.io/images/favicon-16x16-next.png">
+<meta property="og:image" content="https://ihere.io/images/nginx-confg-no1.png">
+<meta property="og:image" content="https://ihere.io/images/nginx-confg-no1.png">
 <meta property="article:published_time" content="2020-03-20T09:45:22.000Z">
-<meta property="article:modified_time" content="2020-03-23T10:25:02.766Z">
+<meta property="article:modified_time" content="2020-03-24T09:24:30.862Z">
 <meta property="article:author" content="ihere">
 <meta property="article:tag" content="nginx">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ihere.io/images/favicon-16x16-next.png">
+<meta name="twitter:image" content="https://ihere.io/images/nginx-confg-no1.png">
 
 
 
@@ -327,7 +330,8 @@
       
 
       
-        <h1 id="Nginx配置详解"><a href="#Nginx配置详解" class="headerlink" title="Nginx配置详解"></a>Nginx配置详解</h1><h2 id="Nginx介绍"><a href="#Nginx介绍" class="headerlink" title="Nginx介绍"></a>Nginx介绍</h2><p>Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP/POP3/SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。Nginx 是增长最快的 Web 服务器，市场份额已达 33.3％。全球使用量排名第二，2011 年成立商业公司。</p>
+        <h1 id="Nginx配置详解"><a href="#Nginx配置详解" class="headerlink" title="Nginx配置详解"></a>Nginx配置详解</h1><p><img src="/images/nginx-confg-no1.png" alt="image"></p>
+<h2 id="Nginx介绍"><a href="#Nginx介绍" class="headerlink" title="Nginx介绍"></a>Nginx介绍</h2><p>Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP/POP3/SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。Nginx 是增长最快的 Web 服务器，市场份额已达 33.3％。全球使用量排名第二，2011 年成立商业公司。</p>
 <p>Nginx 分支</p>
 <ul>
 <li>Openresty：作者 @agentzh（章宜春）开发的，最大特点是引入了 ngx_lua 模块，支持使用 Lua 开发插件，并且集合了很多丰富的模块，以及 Lua 库</li>
@@ -354,6 +358,8 @@
 <p>而 OCSP Stapling ，顾名思义，是将查询 OCSP 接口的工作交给服务器来做，服务器除了可以直接查询 OCSP 信息，还可以仅进行少数次查询并将响应缓存起来。当有客户端向服务器发起 TLS 握手请求时，服务器将证书的 OCSP 信息随证书链一同发送给客户端，从而避免了客户端验证会产生的阻塞问题。由于 OCSP 响应是无法伪造的，因此这一过程也不会产生额外的安全问题。</p>
 <p>在服务器上部署ocsp装订，能大大缓解链接数与高并发量。省去多次握手操作，使网站访问速度更快。</p>
 <p><img src="/images/favicon-16x16-next.png" alt="image"></p>
+<p><img src="/images/nginx-confg-no1.png" alt="image"></p>
+<p><img src="/images/nginx-confg-no1.png" alt="image"></p>
 
       
     </div>
