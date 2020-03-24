@@ -86,15 +86,15 @@
 <meta property="og:site_name" content="ihere.io">
 <meta property="og:description" content="Nginx配置详解 这里推荐给大家一个生成Nginx配置文件的web工具。 网址是：https:&#x2F;&#x2F;www.digitalocean.com&#x2F;community&#x2F;tools&#x2F;nginx Nginx介绍Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP&#x2F;POP3&#x2F;SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。N">
 <meta property="og:image" content="https://ihere.io/images/nginx-confg-no1.png">
-<meta property="og:image" content="https://ihere.io/images/nginx-confg-no2.png">
-<meta property="og:image" content="https://ihere.io/images/nginx-confg-no4.png">
-<meta property="og:image" content="https://ihere.io/images/nginx-confg-no3.png">
-<meta property="og:image" content="https://ihere.io/images/nginx-confg-no5.png">
-<meta property="og:image" content="https://ihere.io/images/nginx-confg-no6.png">
-<meta property="og:image" content="https://ihere.io/images/nginx-confg-no7.png">
-<meta property="og:image" content="https://ihere.io/images/nginx-confg-no8.png">
+<meta property="og:image" content="https://ihere.io/images/nginx-conf-no2.png">
+<meta property="og:image" content="https://ihere.io/images/nginx-conf-no4.png">
+<meta property="og:image" content="https://ihere.io/images/nginx-conf-no3.png">
+<meta property="og:image" content="https://ihere.io/images/nginx-conf-no5.png">
+<meta property="og:image" content="https://ihere.io/images/nginx-conf-no6.png">
+<meta property="og:image" content="https://ihere.io/images/nginx-conf-no7.png">
+<meta property="og:image" content="https://ihere.io/images/nginx-conf-no8.png">
 <meta property="article:published_time" content="2020-03-20T09:45:22.000Z">
-<meta property="article:modified_time" content="2020-03-24T10:26:14.280Z">
+<meta property="article:modified_time" content="2020-03-24T10:31:44.136Z">
 <meta property="article:author" content="ihere">
 <meta property="article:tag" content="nginx">
 <meta name="twitter:card" content="summary">
@@ -366,15 +366,15 @@
 <ol>
 <li><p>获取证书</p>
 <p>在您完成服务证书的申请之后，一般会给您两个文件，一个是crt或者pem格式结尾的是站点本身的证书文件，例如<code>www.domainname.com.crt</code>; 还有填写csr之后以key格式结尾并下载的私钥文件，例如<code>www.domainname.com.key</code>； 除了站点证书以外，我们还需要中级证书以及根证书。首先打开浏览器，输入您之前部署好的证书的站点网址，这里以本博客为例，如下图所示：</p>
-<p><img src="/images/nginx-confg-no2.png" alt="image"></p>
-<p><img src="/images/nginx-confg-no4.png" alt="image"></p>
+<p><img src="/images/nginx-conf-no2.png" alt="image"></p>
+<p><img src="/images/nginx-conf-no4.png" alt="image"></p>
 <p> 然后点击查看证书，选择-详细信息，最后复制到文件；</p>
-<p><img src="/images/nginx-confg-no3.png" alt="image"></p>
+<p><img src="/images/nginx-conf-no3.png" alt="image"></p>
 <p>如下图中，编码格式选择Base64-cer格式；</p>
-<p><img src="/images/nginx-confg-no5.png" alt="image"></p>
+<p><img src="/images/nginx-conf-no5.png" alt="image"></p>
 <p>选择要导出的文件名，然后保存！</p>
-<p><img src="/images/nginx-confg-no6.png" alt="image"></p>
-<p><img src="/images/nginx-confg-no7.png" alt="image"></p>
+<p><img src="/images/nginx-conf-no6.png" alt="image"></p>
+<p><img src="/images/nginx-conf-no7.png" alt="image"></p>
 <p>PS: 然后按照相同的操作，导出根证书。中级证书名称为：issuer.crt.cer 根证书名称为：root.crt.cer</p>
 </li>
 <li><p>将三份证书上传到服务器，生成OCSP Stapling验证文件。即是将中级证书与根证书合并一起。注意，中级证书在上、根证书在下。</p>
@@ -406,7 +406,7 @@
 
 <p>#使用 SSLLAB 自动验证</p>
 <p>访问 <code>https://www.ssllabs.com/ssltest/</code> ，输入欲测试的域名，稍等片刻后，如果发现结果中出现如下内容则证明已成功开启 OCSP Stapling:</p>
-<p><img src="/images/nginx-confg-no8.png" alt="image"></p>
+<p><img src="/images/nginx-conf-no8.png" alt="image"></p>
 </li>
 </ol>
 
