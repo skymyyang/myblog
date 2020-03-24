@@ -79,22 +79,26 @@
 
 
 
-<meta name="description" content="Nginx配置详解 Nginx介绍Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP&#x2F;POP3&#x2F;SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。Nginx 是增长最快的 Web 服务器，市场份额已达 33.3％。全球使用量排名第二，2011 年成立商业公司。 Nginx 分支  Openresty：作者 @ag">
+<meta name="description" content="Nginx配置详解 这里推荐给大家一个生成Nginx配置文件的web工具。 网址是：https:&#x2F;&#x2F;www.digitalocean.com&#x2F;community&#x2F;tools&#x2F;nginx Nginx介绍Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP&#x2F;POP3&#x2F;SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。N">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NginxConfig">
 <meta property="og:url" content="https://ihere.io/2020/03/20/NginxConfig/index.html">
 <meta property="og:site_name" content="ihere.io">
-<meta property="og:description" content="Nginx配置详解 Nginx介绍Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP&#x2F;POP3&#x2F;SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。Nginx 是增长最快的 Web 服务器，市场份额已达 33.3％。全球使用量排名第二，2011 年成立商业公司。 Nginx 分支  Openresty：作者 @ag">
-<meta property="og:image" content="https://ihere.io/images/nginx-confg-no1.png">
-<meta property="og:image" content="https://ihere.io/images/favicon-16x16-next.png">
-<meta property="og:image" content="https://ihere.io/images/nginx-confg-no1.png">
-<meta property="og:image" content="https://ihere.io/images/nginx-confg-no1.png">
+<meta property="og:description" content="Nginx配置详解 这里推荐给大家一个生成Nginx配置文件的web工具。 网址是：https:&#x2F;&#x2F;www.digitalocean.com&#x2F;community&#x2F;tools&#x2F;nginx Nginx介绍Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP&#x2F;POP3&#x2F;SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。N">
+<meta property="og:image" content="https://ihere.io/images/nginx/nginx-confg-no1.png">
+<meta property="og:image" content="https://ihere.io/images/nginx/nginx-confg-no2.png">
+<meta property="og:image" content="https://ihere.io/images/nginx/nginx-confg-no4.png">
+<meta property="og:image" content="https://ihere.io/images/nginx/nginx-confg-no3.png">
+<meta property="og:image" content="https://ihere.io/images/nginx/nginx-confg-no5.png">
+<meta property="og:image" content="https://ihere.io/images/nginx/nginx-confg-no6.png">
+<meta property="og:image" content="https://ihere.io/images/nginx/nginx-confg-no7.png">
+<meta property="og:image" content="https://ihere.io/images/nginx/nginx-confg-no8.png">
 <meta property="article:published_time" content="2020-03-20T09:45:22.000Z">
-<meta property="article:modified_time" content="2020-03-24T09:24:30.862Z">
+<meta property="article:modified_time" content="2020-03-24T10:22:04.024Z">
 <meta property="article:author" content="ihere">
 <meta property="article:tag" content="nginx">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ihere.io/images/nginx-confg-no1.png">
+<meta name="twitter:image" content="https://ihere.io/images/nginx/nginx-confg-no1.png">
 
 
 
@@ -330,7 +334,9 @@
       
 
       
-        <h1 id="Nginx配置详解"><a href="#Nginx配置详解" class="headerlink" title="Nginx配置详解"></a>Nginx配置详解</h1><p><img src="/images/nginx-confg-no1.png" alt="image"></p>
+        <h1 id="Nginx配置详解"><a href="#Nginx配置详解" class="headerlink" title="Nginx配置详解"></a>Nginx配置详解</h1><p><img src="/images/nginx/nginx-confg-no1.png" alt="image"></p>
+<p>这里推荐给大家一个生成Nginx配置文件的web工具。</p>
+<p>网址是：<code>https://www.digitalocean.com/community/tools/nginx</code></p>
 <h2 id="Nginx介绍"><a href="#Nginx介绍" class="headerlink" title="Nginx介绍"></a>Nginx介绍</h2><p>Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP/POP3/SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。Nginx 是增长最快的 Web 服务器，市场份额已达 33.3％。全球使用量排名第二，2011 年成立商业公司。</p>
 <p>Nginx 分支</p>
 <ul>
@@ -357,9 +363,52 @@
 <p>然而这些默认查询 OCSP 的客户端在获得查询结果的响应前势必会一直阻塞后续的事件，在网络情况堪忧的情况下（尤其是大陆地区）会造成较长时间的页面空白。</p>
 <p>而 OCSP Stapling ，顾名思义，是将查询 OCSP 接口的工作交给服务器来做，服务器除了可以直接查询 OCSP 信息，还可以仅进行少数次查询并将响应缓存起来。当有客户端向服务器发起 TLS 握手请求时，服务器将证书的 OCSP 信息随证书链一同发送给客户端，从而避免了客户端验证会产生的阻塞问题。由于 OCSP 响应是无法伪造的，因此这一过程也不会产生额外的安全问题。</p>
 <p>在服务器上部署ocsp装订，能大大缓解链接数与高并发量。省去多次握手操作，使网站访问速度更快。</p>
-<p><img src="/images/favicon-16x16-next.png" alt="image"></p>
-<p><img src="/images/nginx-confg-no1.png" alt="image"></p>
-<p><img src="/images/nginx-confg-no1.png" alt="image"></p>
+<ol>
+<li><p>获取证书</p>
+<p>在您完成服务证书的申请之后，一般会给您两个文件，一个是crt或者pem格式结尾的是站点本身的证书文件，例如<code>www.domainname.com.crt</code>; 还有填写csr之后以key格式结尾并下载的私钥文件，例如<code>www.domainname.com.key</code>； 除了站点证书以外，我们还需要中级证书以及根证书。首先打开浏览器，输入您之前部署好的证书的站点网址，这里以本博客为例，如下图所示：</p>
+<p><img src="/images/nginx/nginx-confg-no2.png" alt="image"></p>
+<p><img src="/images/nginx/nginx-confg-no4.png" alt="image"></p>
+<p> 然后点击查看证书，选择-详细信息，最后复制到文件；</p>
+<p><img src="/images/nginx/nginx-confg-no3.png" alt="image"></p>
+<p>如下图中，编码格式选择Base64-cer格式；</p>
+<p><img src="/images/nginx/nginx-confg-no5.png" alt="image"></p>
+<p>选择要导出的文件名，然后保存！</p>
+<p><img src="/images/nginx/nginx-confg-no6.png" alt="image"></p>
+<p><img src="/images/nginx/nginx-confg-no7.png" alt="image"></p>
+<p>PS: 然后按照相同的操作，导出根证书。中级证书名称为：issuer.crt.cer 根证书名称为：root.crt.cer</p>
+</li>
+<li><p>将三份证书上传到服务器，生成OCSP Stapling验证文件。即是将中级证书与根证书合并一起。注意，中级证书在上、根证书在下。</p>
+<p>Linux中使用如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat issuer.crt.cer &gt;&gt; chain.crt</span><br><span class="line">cat root.crt.cer &gt;&gt; chain.crt</span><br></pre></td></tr></table></figure>
+
+<p>Windows下使用文本编辑打开中级证书与根证书分别按照中级证书在上、根证书在下的顺序排列合并，然后重命名即可.</p>
+<p>最后合并生成的chain.crt就是所需的ocsp stapling验证文件.</p>
+</li>
+<li><p>Nginx 启用 OCSP Stapling</p>
+<p>在nginx的主配置文件中，http模块中添加如下配置;这里需要注意的是在HTTP模块中，就代表所有的站点都将启用OCSP Stapling。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># OCSP Stapling</span></span><br><span class="line"><span class="attribute">ssl_stapling</span> <span class="literal">on</span>;</span><br><span class="line"><span class="attribute">ssl_stapling_verify</span> <span class="literal">on</span>;</span><br><span class="line"><span class="attribute">resolver</span> <span class="number">223.5.5.5</span> <span class="number">223.6.6.6</span> <span class="number">8.8.8.8</span> <span class="number">8.8.4.4</span> <span class="number">208.67.222.222</span> <span class="number">208.67.220.220</span> <span class="number">114.114.114.114</span> valid=<span class="number">60s</span>;</span><br><span class="line"><span class="attribute">resolver_timeout</span> <span class="number">2s</span>;</span><br></pre></td></tr></table></figure>
+
+<p>然后在该站点的server模块中配置如下,前两行是您之前的HTTPS配置，<code>ssl_trusted_certificate</code>是您要添加的配置：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SSL</span></span><br><span class="line"><span class="attribute">ssl_certificate</span> /etc/pki/nginx/ihere.io/fullchain.crt;</span><br><span class="line"><span class="attribute">ssl_certificate_key</span> /etc/pki/nginx/ihere.io/privkey.key;</span><br><span class="line"><span class="attribute">ssl_trusted_certificate</span> /etc/pki/nginx/ihere.io/chain.crt;</span><br></pre></td></tr></table></figure>
+
+<p>然后检测配置并重载：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<p>PS: 如果只针对该站点启用，而不想对该nginx下的所有站点启用，之需要在该站点的server添加如下内容：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ssl_stapling</span> <span class="literal">on</span>;</span><br><span class="line"><span class="attribute">ssl_stapling_verify</span> <span class="literal">on</span>;</span><br><span class="line"><span class="attribute">ssl_trusted_certificate</span> /path/to/certs/chained.pem;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>随后验证OCSP Stapling是否开启</p>
+<p>#手动验证</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> QUIT | openssl s_client -connect ihere.io:443 -status 2&gt; /dev/null | grep -A 17 <span class="string">'OCSP response:'</span></span><br></pre></td></tr></table></figure>
+
+<p>若出现一下内容，则开启成功：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">OCSP response: </span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">OCSP Response Data:</span><br><span class="line">    OCSP Response Status: successful (0x0)</span><br><span class="line">    Response Type: Basic OCSP Response</span><br><span class="line">    Version: 1 (0x0)</span><br><span class="line">    Responder Id: 9058FFB09C75A8515477B1EDF2A34316389E6CC5</span><br><span class="line">    Produced At: Mar 23 18:04:01 2020 GMT</span><br><span class="line">    Responses:</span><br><span class="line">    Certificate ID:</span><br><span class="line">      Hash Algorithm: sha1</span><br><span class="line">      Issuer Name Hash: 777A7BA877D6F10F1CE9202196FB6B1A6E37F5ED</span><br><span class="line">      Issuer Key Hash: 9058FFB09C75A8515477B1EDF2A34316389E6CC5</span><br><span class="line">      Serial Number: 08BF04E59C7D7A734E3EF18507AC59E6</span><br><span class="line">    Cert Status: good</span><br><span class="line">    This Update: Mar 23 18:04:01 2020 GMT</span><br><span class="line">    Next Update: Mar 30 17:19:01 2020 GMT</span><br></pre></td></tr></table></figure>
+
+<p>#使用 SSLLAB 自动验证</p>
+<p>访问 <code>https://www.ssllabs.com/ssltest/</code> ，输入欲测试的域名，稍等片刻后，如果发现结果中出现如下内容则证明已成功开启 OCSP Stapling:</p>
+<p><img src="/images/nginx/nginx-confg-no8.png" alt="image"></p>
+</li>
+</ol>
 
       
     </div>
