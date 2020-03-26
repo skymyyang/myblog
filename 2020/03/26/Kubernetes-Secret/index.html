@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Centos, Kubernetes, Nginx, Devops, MySQL, Docker" />
+  <meta name="keywords" content="kubernetes," />
 
 
 
@@ -79,11 +79,16 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="ihere.io">
-<meta property="og:url" content="https://ihere.io/index.html">
+<meta name="description" content="secret 的四种形式ConfigMap这个资源对象是Kubernetes当中非常重要的一个对象，一般情况下ConfigMap是用来存储一些非安全的配置信息，如果涉及到一些安全相关的数据的话用ConfigMap就非常不妥了，因为ConfigMap是名为存储的，我们说这个时候我们就需要用到另外一个资源对象了：Secret，Secret用来保存敏感信息，例如密码、OAuth 令牌和 ssh key等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes Secret">
+<meta property="og:url" content="https://ihere.io/2020/03/26/Kubernetes-Secret/index.html">
 <meta property="og:site_name" content="ihere.io">
+<meta property="og:description" content="secret 的四种形式ConfigMap这个资源对象是Kubernetes当中非常重要的一个对象，一般情况下ConfigMap是用来存储一些非安全的配置信息，如果涉及到一些安全相关的数据的话用ConfigMap就非常不妥了，因为ConfigMap是名为存储的，我们说这个时候我们就需要用到另外一个资源对象了：Secret，Secret用来保存敏感信息，例如密码、OAuth 令牌和 ssh key等">
+<meta property="article:published_time" content="2020-03-26T09:16:16.000Z">
+<meta property="article:modified_time" content="2020-03-26T09:17:54.709Z">
 <meta property="article:author" content="ihere">
+<meta property="article:tag" content="kubernetes">
 <meta name="twitter:card" content="summary">
 
 
@@ -114,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="https://ihere.io/"/>
+  <link rel="canonical" href="https://ihere.io/2020/03/26/Kubernetes-Secret/"/>
 
 
 
 
 
-  <title>ihere.io</title>
+  <title>Kubernetes Secret | ihere.io</title>
   
 
 
@@ -139,8 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -225,9 +229,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -257,9 +261,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/26/Kubernetes-Secret/" itemprop="url">Kubernetes Secret</a></h1>
+          <h1 class="post-title" itemprop="name headline">Kubernetes Secret</h1>
         
 
         <div class="post-meta">
@@ -331,9 +333,7 @@
       
 
       
-        
-          
-            <h2 id="secret-的四种形式"><a href="#secret-的四种形式" class="headerlink" title="secret 的四种形式"></a>secret 的四种形式</h2><p>ConfigMap这个资源对象是Kubernetes当中非常重要的一个对象，一般情况下ConfigMap是用来存储一些非安全的配置信息，如果涉及到一些安全相关的数据的话用ConfigMap就非常不妥了，因为ConfigMap是名为存储的，我们说这个时候我们就需要用到另外一个资源对象了：Secret，Secret用来保存敏感信息，例如密码、OAuth 令牌和 ssh key等等，将这些信息放在Secret中比放在Pod的定义中或者docker镜像中来说更加安全和灵活。</p>
+        <h2 id="secret-的四种形式"><a href="#secret-的四种形式" class="headerlink" title="secret 的四种形式"></a>secret 的四种形式</h2><p>ConfigMap这个资源对象是Kubernetes当中非常重要的一个对象，一般情况下ConfigMap是用来存储一些非安全的配置信息，如果涉及到一些安全相关的数据的话用ConfigMap就非常不妥了，因为ConfigMap是名为存储的，我们说这个时候我们就需要用到另外一个资源对象了：Secret，Secret用来保存敏感信息，例如密码、OAuth 令牌和 ssh key等等，将这些信息放在Secret中比放在Pod的定义中或者docker镜像中来说更加安全和灵活。</p>
 <ul>
 <li>Opaque：base64 编码格式的 Secret，用来存储密码、密钥等；但数据也可以通过base64 –decode解码得到原始数据，所有加密性很弱。</li>
 <li>kubernetes.io/dockerconfigjson：用来存储私有docker registry的认证信息。</li>
@@ -420,8 +420,6 @@
 <li>Secret 分为 kubernetes.io/service-account-token、kubernetes.io/dockerconfigjson、Opaque、kubernetes.io/tls 四种类型，而 Configmap 不区分类型</li>
 </ul>
 
-          
-        
       
     </div>
     
@@ -433,404 +431,57 @@
     
 
     
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    ihere
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://ihere.io/2020/03/26/Kubernetes-Secret/" title="Kubernetes Secret">https://ihere.io/2020/03/26/Kubernetes-Secret/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc/4.0/" rel="external nofollow" target="_blank">CC BY-NC 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ihere.io/2020/03/20/NginxConfig/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ihere">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ihere.io">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/20/NginxConfig/" itemprop="url">NginxConfig</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-20T17:45:22+08:00">
-                2020-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">nginx</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/kubernetes/" rel="tag"># kubernetes</a>
           
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>钱，就像一个熨斗，能烫平生活的所有褶皱。——&gt;电影《寄生虫》</p>
-<h1 id="Nginx配置"><a href="#Nginx配置" class="headerlink" title="Nginx配置"></a>Nginx配置</h1><p><img src="/images/nginx-confg-no1.png" alt="image"></p>
-<p>这里推荐给大家一个生成Nginx配置文件的web工具。</p>
-<p>网址是：<code>https://www.digitalocean.com/community/tools/nginx</code></p>
-<h2 id="Nginx介绍"><a href="#Nginx介绍" class="headerlink" title="Nginx介绍"></a>Nginx介绍</h2><p>Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP/POP3/SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。Nginx 是增长最快的 Web 服务器，市场份额已达 33.3％。全球使用量排名第二，2011 年成立商业公司。</p>
-<p>Nginx 分支</p>
-<ul>
-<li>Openresty：作者 @agentzh（章宜春）开发的，最大特点是引入了 ngx_lua 模块，支持使用 Lua 开发插件，并且集合了很多丰富的模块，以及 Lua 库</li>
-<li>Tengine：主要是淘宝团队开发。特点是融入了因淘宝自身的一些业务带来的新功能。</li>
-<li>Nginx 官方版本，更新迭代比较快，并且提供免费版本和商业版本</li>
-</ul>
-<p>Nginx支持反向代理、负载均衡，具有高可靠性，是单Master多worker模式。</p>
-<p>Nginx具有高可扩展性，且高度模块化。</p>
-<p>Nginx是事件驱动的非阻塞I/O模型。</p>
-<p>Nginx消耗内存极低，且支持热部署。</p>
-<h2 id="Nginx应用"><a href="#Nginx应用" class="headerlink" title="Nginx应用"></a>Nginx应用</h2><ul>
-<li>静态文件服务器</li>
-<li>反向代理，负载均衡</li>
-<li>WAF防火墙，安全防御</li>
-<li>智能路由（企业级灰度测试、地图 POI 一键切流）</li>
-<li>灰度发布</li>
-<li>消息推送，推流服务器</li>
-<li>图片实时压缩</li>
-<li>防盗链</li>
-<li>静态化</li>
-</ul>
-<h1 id="SSL优化"><a href="#SSL优化" class="headerlink" title="SSL优化"></a>SSL优化</h1><h2 id="缓存连接凭据"><a href="#缓存连接凭据" class="headerlink" title="缓存连接凭据"></a>缓存连接凭据</h2><p>存 SSL 连接凭据可以避免频繁握手带来的速度降低和性能损耗。</p>
-<p>TLS 协议有两类会话缓存机制：会话标识 session ID 与会话记录 session ticket。session ID 由服务器端支持，协议中的标准字段，因此基本所有服务器都支持，服务器端保存会话ID以及协商的通信信息，Nginx 中1M 内存约可以保存4000个 session ID 机器相关信息，占用服务器资源较多；而 session ticket 属于一个 TLS 扩展字段，需要服务器和客户端都支持。</p>
-<p>二者对比，主要是保存协商信息的位置与方式不同，类似与 HTTP 中的 session 与 cookie。都存在的情况下，Nginx 优先使用 session_ticket。</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SSL</span></span><br><span class="line"><span class="attribute">ssl_session_timeout</span> <span class="number">1d</span>;</span><br><span class="line"><span class="comment"># 过期时间，分钟</span></span><br><span class="line"><span class="attribute">ssl_session_cache</span> shared:SSL:<span class="number">10m</span>;</span><br><span class="line"><span class="comment"># SSL session 缓存区大小</span></span><br><span class="line"><span class="attribute">ssl_session_tickets</span> <span class="literal">off</span>;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Forward-Secrecy-前向加密"><a href="#Forward-Secrecy-前向加密" class="headerlink" title="Forward Secrecy(前向加密)"></a>Forward Secrecy(前向加密)</h2><p>forward secrecy 也称之为 perfect forward secrecy，或者 PFS。称之为完美远期加密。是在HTTPS基础上进一步保护用户电脑同服务器之间的加密通讯。</p>
-<p>其解决的一个安全场景就是，如果服务器同用户间的加密通讯内容被窃听，也被储存下来，这些被加密的内容虽然当时无法被解密，被破解，但是当日后，服务器的SSL密钥被取得后（不管是何种原因被取得密钥），这些过往的内容是可以用这个密钥来解密的。这样虽然时效性可能差些，但是仍然是会有被破解的危险存在。</p>
-<p>而采用 完美远期加密 的 SSL 或者 HTTPS 通讯，加密钥匙只是短暂性的，而且不能从服务器的 SSL 密钥中推算出来，这样即使日后 SSL 密钥被第三方取得，过去和未来的 HTTPS 通讯仍然安全，窃听者始终无法破解所窃听的内容（以目前的技术而言）。</p>
-<p>目前只有用 ephemeral Diffie-Hellman 的算法才算是完美远期加密</p>
-<p>配置方法</p>
-<p>在终端运行（建议把这个 Diffie-Hellman 参数文件和证书放在一起）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl dhparam -out dhparam.pem 2048</span><br></pre></td></tr></table></figure>
-
-<p>在 Nginx 的配置文件中加入:</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Diffie-Hellman parameter for DHE ciphersuites</span></span><br><span class="line"><span class="attribute">ssl_dhparam</span> /etc/nginx/dhparam.pem;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="HSTS（HTTP-Strict-Transport-Security，严格传输安全）"><a href="#HSTS（HTTP-Strict-Transport-Security，严格传输安全）" class="headerlink" title="HSTS（HTTP Strict Transport Security，严格传输安全）"></a>HSTS（HTTP Strict Transport Security，严格传输安全）</h2><p>HSTS 简单说就是在一定时间内强制客户端使用 HTTPS 访问页面。原理如下：</p>
-<ul>
-<li>在服务器响应头中添加 <code>Strict-Transport-Security</code>，可以设置 <code>max-age</code></li>
-<li>用户访问时，服务器种下这个头</li>
-<li>下次如果使用 HTTP 访问，只要 <code>max-age</code> 未过期，客户端会进行内部跳转，可以看到 307 Redirect Internel 的响应码（注意是<strong>客户端浏览器相应的</strong>，这里给服务器省下了一次 302 跳转）</li>
-<li>变成 HTTPS 访问源服务器</li>
-</ul>
-<p>这个过程有效避免了中间人对 80 端口的劫持。但是这里存在一个问题：如果用户在劫持状态，并且没有访问过源服务器，那么源服务器是没有办法给客户端种下 Strict-Transport-Security 响应头的（都被中间人挡下来了）。如何解决？请自行谷歌 HSTS preload。</p>
-<p>需要注意的是，<strong>只有启用 preload 之后才是严格意义上安全的 HTTPS</strong>。否则都可能在最薄弱环节被攻破。比如：</p>
-<p>允许 SSL 连接但不强制从 HTTP 跳转到 HTTPS，用户访问 HTTP 被劫持</p>
-<p>部署了 HSTS，但用户<strong>第一次访问</strong>是 HTTP 的，Strict-Transport-Security 的响应头没有作用的机会，还是被劫持</p>
-<p>开启HSTS</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">add_header</span> Strict-Transport-Security <span class="string">"max-age=31536000; includeSubDomains; preload"</span> always;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Nginx-ocsp-Stapling"><a href="#Nginx-ocsp-Stapling" class="headerlink" title="Nginx ocsp Stapling"></a>Nginx ocsp Stapling</h2><p>OCSP (Online Certificate Status Protocol) 通常由 CA 提供，用于在线实时验证证书是否合法有效，这样客户端就可以根据证书中的 OCSP 信息，发送查询请求到 CA 的验证地址，来检查此证书是否有效。</p>
-<p>然而这些默认查询 OCSP 的客户端在获得查询结果的响应前势必会一直阻塞后续的事件，在网络情况堪忧的情况下（尤其是大陆地区）会造成较长时间的页面空白。</p>
-<p>而 OCSP Stapling ，顾名思义，是将查询 OCSP 接口的工作交给服务器来做，服务器除了可以直接查询 OCSP 信息，还可以仅进行少数次查询并将响应缓存起来。当有客户端向服务器发起 TLS 握手请求时，服务器将证书的 OCSP 信息随证书链一同发送给客户端，从而避免了客户端验证会产生的阻塞问题。由于 OCSP 响应是无法伪造的，因此这一过程也不会产生额外的安全问题。</p>
-<p>在服务器上部署ocsp装订，能大大缓解链接数与高并发量。省去多次握手操作，使网站访问速度更快。</p>
-<ol>
-<li><p>获取证书</p>
-<p>在您完成服务证书的申请之后，一般会给您两个文件，一个是crt或者pem格式结尾的是站点本身的证书文件，例如<code>www.domainname.com.crt</code>; 还有填写csr之后以key格式结尾并下载的私钥文件，例如<code>www.domainname.com.key</code>； 除了站点证书以外，我们还需要中级证书以及根证书。首先打开浏览器，输入您之前部署好的证书的站点网址，这里以本博客为例，如下图所示：</p>
-<p><img src="/images/nginx-conf-no2.png" alt="image"></p>
-<p><img src="/images/nginx-conf-no4.png" alt="image"></p>
-<p> 然后点击查看证书，选择-详细信息，最后复制到文件；</p>
-<p><img src="/images/nginx-conf-no3.png" alt="image"></p>
-<p>如下图中，编码格式选择Base64-cer格式；</p>
-<p><img src="/images/nginx-conf-no5.png" alt="image"></p>
-<p>选择要导出的文件名，然后保存！</p>
-<p><img src="/images/nginx-conf-no6.png" alt="image"></p>
-<p><img src="/images/nginx-conf-no7.png" alt="image"></p>
-<p>PS: 然后按照相同的操作，导出根证书。中级证书名称为：issuer.crt.cer 根证书名称为：root.crt.cer</p>
-</li>
-<li><p>将三份证书上传到服务器，生成OCSP Stapling验证文件。即是将中级证书与根证书合并一起。注意，中级证书在上、根证书在下。</p>
-<p>Linux中使用如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat issuer.crt.cer &gt;&gt; chain.crt</span><br><span class="line">cat root.crt.cer &gt;&gt; chain.crt</span><br></pre></td></tr></table></figure>
-
-<p>Windows下使用文本编辑打开中级证书与根证书分别按照中级证书在上、根证书在下的顺序排列合并，然后重命名即可.</p>
-<p>最后合并生成的chain.crt就是所需的ocsp stapling验证文件.</p>
-</li>
-<li><p>Nginx 启用 OCSP Stapling</p>
-<p>在nginx的主配置文件中，http模块中添加如下配置;这里需要注意的是在HTTP模块中，就代表所有的站点都将启用OCSP Stapling。</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># OCSP Stapling</span></span><br><span class="line"><span class="attribute">ssl_stapling</span> <span class="literal">on</span>;</span><br><span class="line"><span class="attribute">ssl_stapling_verify</span> <span class="literal">on</span>;</span><br><span class="line"><span class="attribute">resolver</span> <span class="number">223.5.5.5</span> <span class="number">223.6.6.6</span> <span class="number">8.8.8.8</span> <span class="number">8.8.4.4</span> <span class="number">208.67.222.222</span> <span class="number">208.67.220.220</span> <span class="number">114.114.114.114</span> valid=<span class="number">60s</span>;</span><br><span class="line"><span class="attribute">resolver_timeout</span> <span class="number">2s</span>;</span><br></pre></td></tr></table></figure>
-
-<p>然后在该站点的server模块中配置如下,前两行是您之前的HTTPS配置，<code>ssl_trusted_certificate</code>是您要添加的配置：</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SSL</span></span><br><span class="line"><span class="attribute">ssl_certificate</span> /etc/pki/nginx/ihere.io/fullchain.crt;</span><br><span class="line"><span class="attribute">ssl_certificate_key</span> /etc/pki/nginx/ihere.io/privkey.key;</span><br><span class="line"><span class="attribute">ssl_trusted_certificate</span> /etc/pki/nginx/ihere.io/chain.crt;</span><br></pre></td></tr></table></figure>
-
-<p>然后检测配置并重载：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
-
-<p>PS: 如果只针对该站点启用，而不想对该nginx下的所有站点启用，之需要在该站点的server添加如下内容：</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ssl_stapling</span> <span class="literal">on</span>;</span><br><span class="line"><span class="attribute">ssl_stapling_verify</span> <span class="literal">on</span>;</span><br><span class="line"><span class="attribute">ssl_trusted_certificate</span> /path/to/certs/chained.pem;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>随后验证OCSP Stapling是否开启</p>
-<p>#手动验证</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> QUIT | openssl s_client -connect ihere.io:443 -status 2&gt; /dev/null | grep -A 17 <span class="string">'OCSP response:'</span></span><br></pre></td></tr></table></figure>
-
-<p>若出现一下内容，则开启成功：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">OCSP response: </span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">OCSP Response Data:</span><br><span class="line">    OCSP Response Status: successful (0x0)</span><br><span class="line">    Response Type: Basic OCSP Response</span><br><span class="line">    Version: 1 (0x0)</span><br><span class="line">    Responder Id: 9058FFB09C75A8515477B1EDF2A34316389E6CC5</span><br><span class="line">    Produced At: Mar 23 18:04:01 2020 GMT</span><br><span class="line">    Responses:</span><br><span class="line">    Certificate ID:</span><br><span class="line">      Hash Algorithm: sha1</span><br><span class="line">      Issuer Name Hash: 777A7BA877D6F10F1CE9202196FB6B1A6E37F5ED</span><br><span class="line">      Issuer Key Hash: 9058FFB09C75A8515477B1EDF2A34316389E6CC5</span><br><span class="line">      Serial Number: 08BF04E59C7D7A734E3EF18507AC59E6</span><br><span class="line">    Cert Status: good</span><br><span class="line">    This Update: Mar 23 18:04:01 2020 GMT</span><br><span class="line">    Next Update: Mar 30 17:19:01 2020 GMT</span><br></pre></td></tr></table></figure>
-
-<p>#使用 SSLLAB 自动验证</p>
-<p>访问 <code>https://www.ssllabs.com/ssltest/</code> ，输入欲测试的域名，稍等片刻后，如果发现结果中出现如下内容则证明已成功开启 OCSP Stapling:</p>
-<p><img src="/images/nginx-conf-no8.png" alt="image"></p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ihere.io/2020/03/16/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ihere">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ihere.io">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/16/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-16T17:45:31+08:00">
-                2020-03-16
-              </time>
+              <a href="/2020/03/20/NginxConfig/" rel="next" title="NginxConfig">
+                <i class="fa fa-chevron-left"></i> NginxConfig
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -840,10 +491,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -851,6 +503,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -871,8 +527,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -932,6 +597,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#secret-的四种形式"><span class="nav-number">1.</span> <span class="nav-text">secret 的四种形式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Opaque-Secret"><span class="nav-number">1.1.</span> <span class="nav-text">Opaque Secret</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#环境变量"><span class="nav-number">1.1.1.</span> <span class="nav-text">环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volume挂载"><span class="nav-number">1.1.2.</span> <span class="nav-text">volume挂载</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kubernetes-io-dockerconfigjson"><span class="nav-number">1.2.</span> <span class="nav-text">kubernetes.io&#x2F;dockerconfigjson</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kubernetes-io-service-account-token"><span class="nav-number">1.3.</span> <span class="nav-text">kubernetes.io&#x2F;service-account-token</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kubernetes-io-tls"><span class="nav-number">1.4.</span> <span class="nav-text">kubernetes.io&#x2F;tls</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Secret-与-ConfigMap-对比"><span class="nav-number">2.</span> <span class="nav-text">Secret 与 ConfigMap 对比</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1072,6 +753,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
