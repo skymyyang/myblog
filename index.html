@@ -326,7 +326,7 @@
         
           
             <p>钱，就像一个熨斗，能烫平生活的所有褶皱。——&gt;电影《寄生虫》</p>
-<h1 id="Nginx配置详解"><a href="#Nginx配置详解" class="headerlink" title="Nginx配置详解"></a>Nginx配置详解</h1><p><img src="/images/nginx-confg-no1.png" alt="image"></p>
+<h1 id="Nginx配置"><a href="#Nginx配置" class="headerlink" title="Nginx配置"></a>Nginx配置</h1><p><img src="/images/nginx-confg-no1.png" alt="image"></p>
 <p>这里推荐给大家一个生成Nginx配置文件的web工具。</p>
 <p>网址是：<code>https://www.digitalocean.com/community/tools/nginx</code></p>
 <h2 id="Nginx介绍"><a href="#Nginx介绍" class="headerlink" title="Nginx介绍"></a>Nginx介绍</h2><p>Nginx (engine x) 是一个高性能的 Web 服务器和反向代理服务器，也是一个 IMAP/POP3/SMTP 服务器。它由俄罗斯程序员 Igor Sysoev 于 2002 年开始开发。Nginx 是增长最快的 Web 服务器，市场份额已达 33.3％。全球使用量排名第二，2011 年成立商业公司。</p>
@@ -351,6 +351,44 @@
 <li>防盗链</li>
 <li>静态化</li>
 </ul>
+<h1 id="SSL优化"><a href="#SSL优化" class="headerlink" title="SSL优化"></a>SSL优化</h1><h2 id="缓存连接凭据"><a href="#缓存连接凭据" class="headerlink" title="缓存连接凭据"></a>缓存连接凭据</h2><p>存 SSL 连接凭据可以避免频繁握手带来的速度降低和性能损耗。</p>
+<p>TLS 协议有两类会话缓存机制：会话标识 session ID 与会话记录 session ticket。session ID 由服务器端支持，协议中的标准字段，因此基本所有服务器都支持，服务器端保存会话ID以及协商的通信信息，Nginx 中1M 内存约可以保存4000个 session ID 机器相关信息，占用服务器资源较多；而 session ticket 属于一个 TLS 扩展字段，需要服务器和客户端都支持。</p>
+<p>二者对比，主要是保存协商信息的位置与方式不同，类似与 HTTP 中的 session 与 cookie。都存在的情况下，Nginx 优先使用 session_ticket。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SSL</span></span><br><span class="line"><span class="attribute">ssl_session_timeout</span> <span class="number">1d</span>;</span><br><span class="line"><span class="comment"># 过期时间，分钟</span></span><br><span class="line"><span class="attribute">ssl_session_cache</span> shared:SSL:<span class="number">10m</span>;</span><br><span class="line"><span class="comment"># SSL session 缓存区大小</span></span><br><span class="line"><span class="attribute">ssl_session_tickets</span> <span class="literal">off</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Forward-Secrecy-前向加密"><a href="#Forward-Secrecy-前向加密" class="headerlink" title="Forward Secrecy(前向加密)"></a>Forward Secrecy(前向加密)</h2><p>forward secrecy 也称之为 perfect forward secrecy，或者 PFS。称之为完美远期加密。是在HTTPS基础上进一步保护用户电脑同服务器之间的加密通讯。</p>
+<p>其解决的一个安全场景就是，如果服务器同用户间的加密通讯内容被窃听，也被储存下来，这些被加密的内容虽然当时无法被解密，被破解，但是当日后，服务器的SSL密钥被取得后（不管是何种原因被取得密钥），这些过往的内容是可以用这个密钥来解密的。这样虽然时效性可能差些，但是仍然是会有被破解的危险存在。</p>
+<p>而采用 完美远期加密 的 SSL 或者 HTTPS 通讯，加密钥匙只是短暂性的，而且不能从服务器的 SSL 密钥中推算出来，这样即使日后 SSL 密钥被第三方取得，过去和未来的 HTTPS 通讯仍然安全，窃听者始终无法破解所窃听的内容（以目前的技术而言）。</p>
+<p>目前只有用 ephemeral Diffie-Hellman 的算法才算是完美远期加密</p>
+<p>配置方法</p>
+<p>在终端运行（建议把这个 Diffie-Hellman 参数文件和证书放在一起）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl dhparam -out dhparam.pem 2048</span><br></pre></td></tr></table></figure>
+
+<p>在 Nginx 的配置文件中加入:</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Diffie-Hellman parameter for DHE ciphersuites</span></span><br><span class="line"><span class="attribute">ssl_dhparam</span> /etc/nginx/dhparam.pem;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="HSTS（HTTP-Strict-Transport-Security，严格传输安全）"><a href="#HSTS（HTTP-Strict-Transport-Security，严格传输安全）" class="headerlink" title="HSTS（HTTP Strict Transport Security，严格传输安全）"></a>HSTS（HTTP Strict Transport Security，严格传输安全）</h2><p>HSTS 简单说就是在一定时间内强制客户端使用 HTTPS 访问页面。原理如下：</p>
+<ul>
+<li>在服务器响应头中添加 <code>Strict-Transport-Security</code>，可以设置 <code>max-age</code></li>
+<li>用户访问时，服务器种下这个头</li>
+<li>下次如果使用 HTTP 访问，只要 <code>max-age</code> 未过期，客户端会进行内部跳转，可以看到 307 Redirect Internel 的响应码（注意是<strong>客户端浏览器相应的</strong>，这里给服务器省下了一次 302 跳转）</li>
+<li>变成 HTTPS 访问源服务器</li>
+</ul>
+<p>这个过程有效避免了中间人对 80 端口的劫持。但是这里存在一个问题：如果用户在劫持状态，并且没有访问过源服务器，那么源服务器是没有办法给客户端种下 Strict-Transport-Security 响应头的（都被中间人挡下来了）。如何解决？请自行谷歌 HSTS preload。</p>
+<p>需要注意的是，<strong>只有启用 preload 之后才是严格意义上安全的 HTTPS</strong>。否则都可能在最薄弱环节被攻破。比如：</p>
+<p>允许 SSL 连接但不强制从 HTTP 跳转到 HTTPS，用户访问 HTTP 被劫持</p>
+<p>部署了 HSTS，但用户<strong>第一次访问</strong>是 HTTP 的，Strict-Transport-Security 的响应头没有作用的机会，还是被劫持</p>
+<p>开启HSTS</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">add_header</span> Strict-Transport-Security <span class="string">"max-age=31536000; includeSubDomains; preload"</span> always;</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="Nginx-ocsp-Stapling"><a href="#Nginx-ocsp-Stapling" class="headerlink" title="Nginx ocsp Stapling"></a>Nginx ocsp Stapling</h2><p>OCSP (Online Certificate Status Protocol) 通常由 CA 提供，用于在线实时验证证书是否合法有效，这样客户端就可以根据证书中的 OCSP 信息，发送查询请求到 CA 的验证地址，来检查此证书是否有效。</p>
 <p>然而这些默认查询 OCSP 的客户端在获得查询结果的响应前势必会一直阻塞后续的事件，在网络情况堪忧的情况下（尤其是大陆地区）会造成较长时间的页面空白。</p>
 <p>而 OCSP Stapling ，顾名思义，是将查询 OCSP 接口的工作交给服务器来做，服务器除了可以直接查询 OCSP 信息，还可以仅进行少数次查询并将响应缓存起来。当有客户端向服务器发起 TLS 握手请求时，服务器将证书的 OCSP 信息随证书链一同发送给客户端，从而避免了客户端验证会产生的阻塞问题。由于 OCSP 响应是无法伪造的，因此这一过程也不会产生额外的安全问题。</p>
