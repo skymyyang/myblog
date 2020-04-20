@@ -85,25 +85,25 @@
 <meta property="og:url" content="https://ihere.io/2020/04/19/OpenVPN-admin/index.html">
 <meta property="og:site_name" content="ihere.io">
 <meta property="og:description" content="使用OpenVPN-Admin进行管理以及部署OpenVPN简单vpn扫盲点对点隧道协议 (PPTP) 是由包括微软和3Com等公司组成的PPTP论坛开发的一种点对点隧道协，基于拨号使用的PPP协议使用PAP或CHAP之类的加密算法，或者使用Microsoft的点对点加密算法MPPE。其通过跨越基于 TCP&#x2F;IP 的数据网络创建 VPN 实现了从远程客户端到专用企业服务器之间数据的安全传输。PPT">
-<meta property="og:image" content="http://lutim.cpy.re/zBVsZIfb">
-<meta property="og:image" content="http://lutim.cpy.re/qebP1wbQ">
-<meta property="og:image" content="http://lutim.cpy.re/oqAs8tVH">
+<meta property="og:image" content="https://lutim.cpy.re/zBVsZIfb">
+<meta property="og:image" content="https://lutim.cpy.re/qebP1wbQ">
+<meta property="og:image" content="https://lutim.cpy.re/oqAs8tVH">
 <meta property="og:image" content="https://lutim.cpy.re/ftbTjwC2">
 <meta property="og:image" content="https://lutim.cpy.re/5NBhkPzm">
 <meta property="og:image" content="https://lutim.cpy.re/XQkQIgj8">
 <meta property="og:image" content="https://lutim.cpy.re/48XTQAIh">
 <meta property="og:image" content="https://lutim.cpy.re/2rS5xMQt">
-<meta property="og:image" content="http://lutim.cpy.re/2lgAQ5b5">
-<meta property="og:image" content="http://lutim.cpy.re/C7x1qe1C">
-<meta property="og:image" content="http://lutim.cpy.re/uliUp8kX">
-<meta property="og:image" content="http://lutim.cpy.re/xnuUU6ap">
-<meta property="og:image" content="http://lutim.cpy.re/kxM1TJZB">
+<meta property="og:image" content="https://lutim.cpy.re/2lgAQ5b5">
+<meta property="og:image" content="https://lutim.cpy.re/C7x1qe1C">
+<meta property="og:image" content="https://lutim.cpy.re/uliUp8kX">
+<meta property="og:image" content="https://lutim.cpy.re/xnuUU6ap">
+<meta property="og:image" content="https://lutim.cpy.re/kxM1TJZB">
 <meta property="article:published_time" content="2020-04-19T12:20:00.000Z">
-<meta property="article:modified_time" content="2020-04-20T08:56:37.777Z">
+<meta property="article:modified_time" content="2020-04-20T09:03:56.635Z">
 <meta property="article:author" content="ihere">
 <meta property="article:tag" content="OpenVPN">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://lutim.cpy.re/zBVsZIfb">
+<meta name="twitter:image" content="https://lutim.cpy.re/zBVsZIfb">
 
 
 
@@ -348,7 +348,7 @@
 
       
         <h2 id="使用OpenVPN-Admin进行管理以及部署OpenVPN"><a href="#使用OpenVPN-Admin进行管理以及部署OpenVPN" class="headerlink" title="使用OpenVPN-Admin进行管理以及部署OpenVPN"></a>使用<a href="https://github.com/skymyyang/OpenVPN-Admin" target="_blank" rel="noopener">OpenVPN-Admin</a>进行管理以及部署OpenVPN</h2><h3 id="简单vpn扫盲"><a href="#简单vpn扫盲" class="headerlink" title="简单vpn扫盲"></a>简单vpn扫盲</h3><p>点对点隧道协议 (PPTP) 是由包括微软和3Com等公司组成的PPTP论坛开发的一种点对点隧道协，基于拨号使用的PPP协议使用PAP或CHAP之类的加密算法，或者使用Microsoft的点对点加密算法MPPE。其通过跨越基于 TCP/IP 的数据网络创建 VPN 实现了从远程客户端到专用企业服务器之间数据的安全传输。PPTP 支持通过公共网络(例如 Internet)建立按需的、多协议的、虚拟专用网络。PPTP 允许加密 IP 通讯，然后在要跨越公司 IP 网络或公共 IP 网络(如 Internet)发送的 IP 头中对其进行封装。</p>
-<p><img src="http://lutim.cpy.re/zBVsZIfb" alt=""></p>
+<p><img src="https://lutim.cpy.re/zBVsZIfb" alt=""></p>
 <p>之前由于使用Windows server自带的基于PPTP的VPN服务，并且使用LDAP进行管理，感觉使用起来很方便。</p>
 <p>但是出于数据安全的考虑。建议还是使用SSLVPN。</p>
 <p>典型的SSL VPN应用如OpenVPN，是一个比较好的开源软件。</p>
@@ -369,7 +369,7 @@
 <p>可以看到如图，则表示安装成功，部署过程中遇到任何问题，可以查看apache的错误日志：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat /var/<span class="built_in">log</span>/httpd/error.log</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="http://lutim.cpy.re/qebP1wbQ" alt=""></p>
+<p><img src="https://lutim.cpy.re/qebP1wbQ" alt=""></p>
 </li>
 <li><p>安装openVPN以及OpenVPN-admin</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装bower</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> npm install -g bower</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装openvpn</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> dnf install openvpn</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装openvpn-admin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir ~/my_coding_workspace &amp;&amp; <span class="built_in">cd</span> ~/my_coding_workspace</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/Chocobozzz/OpenVPN-Admin openvpn-admin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> openvpn-admin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./install.sh /var/www/html apache apache</span></span><br><span class="line"><span class="meta">#</span><span class="bash">安装失败删除重试，执行如下命令删除</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./desinstall.sh /var/www/html </span></span><br><span class="line"><span class="meta">#</span><span class="bash">如果有前端的包安装失败，可以使用更新继续安装，也可以使用该脚本更新，不过貌似作者已经不维护了，建议熟悉php的童鞋可以继续更新</span></span><br><span class="line"><span class="meta">$</span><span class="bash">  ./update.sh /var/www/html</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在浏览器中进行安装，注意此步骤之前一定不要启动openvpn-server@server</span></span><br><span class="line">http://172.16.18.186/openvpn-admin/index.php?installation</span><br></pre></td></tr></table></figure>
@@ -387,7 +387,7 @@
 <ul>
 <li><p>生成证书文件</p>
 <p>在浏览器中下载配置文件。如下图所示：</p>
-<p><img src="http://lutim.cpy.re/oqAs8tVH" alt=""></p>
+<p><img src="https://lutim.cpy.re/oqAs8tVH" alt=""></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">由于这里我们使用的openvpn-connect的gui客户端，需要合成pkcs12证书给此客户端使用。而我们所下载的配置压缩包中，只需要使用client.ovpn的配置文件即可。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /etc/openvpn/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> openssl pkcs12 -<span class="built_in">export</span> -<span class="keyword">in</span> server.crt -inkey server.key -certfile ca.crt -name MyClient -out client.p12</span></span><br><span class="line"><span class="meta">#</span><span class="bash">PS:此时你可以选择输入密码，或者不输密码也行。单纯为了证书加密使用。</span></span><br></pre></td></tr></table></figure>
 
 
@@ -409,11 +409,11 @@
 <p><img src="https://lutim.cpy.re/2rS5xMQt" alt="第一步"></p>
 </li>
 </ul>
-<p>  <img src="http://lutim.cpy.re/2lgAQ5b5" alt="第二步"></p>
-<p>  <img src="http://lutim.cpy.re/C7x1qe1C" alt="第三步"></p>
-<p>  <img src="http://lutim.cpy.re/uliUp8kX" alt="第四步"></p>
-<p>  <img src="http://lutim.cpy.re/xnuUU6ap" alt="第五步"></p>
-<p>  <img src="http://lutim.cpy.re/kxM1TJZB" alt="连通性测试"></p>
+<p>  <img src="https://lutim.cpy.re/2lgAQ5b5" alt="第二步"></p>
+<p>  <img src="https://lutim.cpy.re/C7x1qe1C" alt="第三步"></p>
+<p>  <img src="https://lutim.cpy.re/uliUp8kX" alt="第四步"></p>
+<p>  <img src="https://lutim.cpy.re/xnuUU6ap" alt="第五步"></p>
+<p>  <img src="https://lutim.cpy.re/kxM1TJZB" alt="连通性测试"></p>
 <p>至此所有的步骤都已经完成了。</p>
 <h3 id="客户端能够上网的关键参数"><a href="#客户端能够上网的关键参数" class="headerlink" title="客户端能够上网的关键参数"></a>客户端能够上网的关键参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 防火墙的配置转发</span><br><span class="line">2. 配置文件中的配置，如下 </span><br><span class="line">   push &quot;redirect-gateway def1&quot;</span><br><span class="line">   push &quot;dhcp-option DNS 10.8.0.1&quot;</span><br></pre></td></tr></table></figure>
 
@@ -426,6 +426,9 @@
 <li><a href="https://linux.cn/article-3407-1.html" target="_blank" rel="noopener">https://linux.cn/article-3407-1.html</a></li>
 <li><a href="https://github.com/skymyyang/OpenVPN-Admin" target="_blank" rel="noopener">https://github.com/skymyyang/OpenVPN-Admin</a></li>
 <li><a href="https://openvpn.net/faq/how-do-i-use-a-client-certificate-and-private-key-from-the-android-keychain/" target="_blank" rel="noopener">https://openvpn.net/faq/how-do-i-use-a-client-certificate-and-private-key-from-the-android-keychain/</a></li>
+<li><a href="https://www.fandenggui.com/post/centos7-install-openvpn.html" target="_blank" rel="noopener">https://www.fandenggui.com/post/centos7-install-openvpn.html</a></li>
+<li><a href="http://www.chenlianfu.com/?p=2699" target="_blank" rel="noopener">http://www.chenlianfu.com/?p=2699</a></li>
+<li><a href="https://hisoka0917.github.io/linux/2017/12/21/openvpn-on-centos7/" target="_blank" rel="noopener">https://hisoka0917.github.io/linux/2017/12/21/openvpn-on-centos7/</a></li>
 </ul>
 <p>客户端下载地址：</p>
 <ul>
