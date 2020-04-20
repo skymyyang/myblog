@@ -240,6 +240,235 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ihere.io/2020/04/19/OpenVPN-admin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ihere">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ihere.io">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/19/OpenVPN-admin/" itemprop="url">OpenVPN admin</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-19T20:20:00+08:00">
+                2020-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="使用OpenVPN-Admin进行管理以及部署OpenVPN"><a href="#使用OpenVPN-Admin进行管理以及部署OpenVPN" class="headerlink" title="使用OpenVPN-Admin进行管理以及部署OpenVPN"></a>使用<a href="https://github.com/skymyyang/OpenVPN-Admin" target="_blank" rel="noopener">OpenVPN-Admin</a>进行管理以及部署OpenVPN</h2><h3 id="简单vpn扫盲"><a href="#简单vpn扫盲" class="headerlink" title="简单vpn扫盲"></a>简单vpn扫盲</h3><p>点对点隧道协议 (PPTP) 是由包括微软和3Com等公司组成的PPTP论坛开发的一种点对点隧道协，基于拨号使用的PPP协议使用PAP或CHAP之类的加密算法，或者使用Microsoft的点对点加密算法MPPE。其通过跨越基于 TCP/IP 的数据网络创建 VPN 实现了从远程客户端到专用企业服务器之间数据的安全传输。PPTP 支持通过公共网络(例如 Internet)建立按需的、多协议的、虚拟专用网络。PPTP 允许加密 IP 通讯，然后在要跨越公司 IP 网络或公共 IP 网络(如 Internet)发送的 IP 头中对其进行封装。</p>
+<p><img src="http://lutim.cpy.re/zBVsZIfb" alt=""></p>
+<p>之前由于使用Windows server自带的基于PPTP的VPN服务，并且使用LDAP进行管理，感觉使用起来很方便。</p>
+<p>但是出于数据安全的考虑。建议还是使用SSLVPN。</p>
+<p>典型的SSL VPN应用如OpenVPN，是一个比较好的开源软件。</p>
+<p>OpenVPN提供了多种身份验证方式，用以确认参与连接双方的身份，包括：预享私钥，第三方证书以及用户名/密码组合。预享密钥最为简单，但同时它 只能用于建立点对点的VPN;基于PKI的第三方证书提供了最完善的功能，但是需要额外的精力去维护一个PKI证书体系。OpenVPN2.0后引入了用 户名/口令组合的身份验证方式，它可以省略客户端证书，但是仍有一份服务器证书需要被用作加密.</p>
+<p>OpenVPN使用通用网络协议(TCP与UDP)的特点使它成为IPsec等协议的理想替代，尤其是在ISP(Internet service provider)过滤某些特定VPN协议的情况下。在选择协议时候，需要注意2个加密隧道之间的网络状况，如有高延迟或者丢包较多的情况下，请选择 TCP协议作为底层协议，UDP协议由于存在无连接和重传机制，导致要隧道上层的协议进行重传，效率非常低下。</p>
+<h3 id="基于Centos8部署"><a href="#基于Centos8部署" class="headerlink" title="基于Centos8部署"></a>基于Centos8部署</h3><ul>
+<li><p>安装基础依赖</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装epel扩展</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> dnf install epel-release -y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装依赖工具</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> dnf install nodejs unzip git wget sed npm net-tools</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>安装Apache以及Mariadb数据库，并配置PHP开发环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">安装Php以及php扩展</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> dnf install php-json php-xml  php-mysqlnd php-mbstring  php-common  php-gd php-fpm php php-zip</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> systemctl <span class="built_in">enable</span> php-fpm &amp;&amp; systemctl start php-fpm</span></span><br><span class="line"><span class="meta">#</span><span class="bash">安装Apache</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> dnf install httpd -y &amp;&amp; systemctl <span class="built_in">enable</span> httpd &amp;&amp; systemctl start httpd</span></span><br><span class="line"><span class="meta">#</span><span class="bash">安装mariadb并进行安全配置</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> dnf install mariadb-server &amp;&amp; systemctl <span class="built_in">enable</span> mariadb &amp;&amp; systemctl start mariadb</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mysql_secure_installation</span></span><br><span class="line">[root@openvpn-admin ~]$ mysql_secure_installation</span><br><span class="line"></span><br><span class="line">NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB</span><br><span class="line">      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!</span><br><span class="line"></span><br><span class="line">In order to log into MariaDB to secure it, we'll need the current</span><br><span class="line">password for the root user.  If you've just installed MariaDB, and</span><br><span class="line">you haven't set the root password yet, the password will be blank,</span><br><span class="line">so you should just press enter here.</span><br><span class="line"><span class="meta">#</span><span class="bash">此处没有密码不用输入</span></span><br><span class="line">Enter current password for root (enter for none): </span><br><span class="line">OK, successfully used password, moving on...</span><br><span class="line"></span><br><span class="line">Setting the root password ensures that nobody can log into the MariaDB</span><br><span class="line">root user without the proper authorisation.</span><br><span class="line"></span><br><span class="line">Set root password? [Y/n] y</span><br><span class="line">New password: </span><br><span class="line">Re-enter new password: </span><br><span class="line">Password updated successfully!</span><br><span class="line">Reloading privilege tables..</span><br><span class="line"> ... Success!</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">By default, a MariaDB installation has an anonymous user, allowing anyone</span><br><span class="line">to log into MariaDB without having to have a user account created for</span><br><span class="line">them.  This is intended only for testing, and to make the installation</span><br><span class="line">go a bit smoother.  You should remove them before moving into a</span><br><span class="line">production environment.</span><br><span class="line"></span><br><span class="line">Remove anonymous users? [Y/n] y</span><br><span class="line"> ... Success!</span><br><span class="line"></span><br><span class="line">Normally, root should only be allowed to connect from 'localhost'.  This</span><br><span class="line">ensures that someone cannot guess at the root password from the network.</span><br><span class="line"></span><br><span class="line">Disallow root login remotely? [Y/n] y</span><br><span class="line"> ... Success!</span><br><span class="line"></span><br><span class="line">By default, MariaDB comes with a database named 'test' that anyone can</span><br><span class="line">access.  This is also intended only for testing, and should be removed</span><br><span class="line">before moving into a production environment.</span><br><span class="line"></span><br><span class="line">Remove test database and access to it? [Y/n] y</span><br><span class="line"> - Dropping test database...</span><br><span class="line"> ... Success!</span><br><span class="line"> - Removing privileges on test database...</span><br><span class="line"> ... Success!</span><br><span class="line"></span><br><span class="line">Reloading the privilege tables will ensure that all changes made so far</span><br><span class="line">will take effect immediately.</span><br><span class="line"></span><br><span class="line">Reload privilege tables now? [Y/n] y</span><br><span class="line"> ... Success!</span><br><span class="line"></span><br><span class="line">Cleaning up...</span><br><span class="line"></span><br><span class="line">All done!  If you've completed all of the above steps, your MariaDB</span><br><span class="line">installation should now be secure.</span><br><span class="line"></span><br><span class="line">Thanks for using MariaDB!</span><br><span class="line"><span class="meta">$</span><span class="bash"> vim /var/www/html/info.php</span></span><br><span class="line">测试文件内容如下：</span><br><span class="line">&lt;?php</span><br><span class="line">  phpinfo();</span><br><span class="line">?&gt;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 然后在浏览器中输入你的服务器地址进行测试</span></span><br><span class="line">http://172.16.18.186/info.php</span><br><span class="line"><span class="meta">#</span><span class="bash">开启防火墙的80端口</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> firewall-cmd --zone=public --add-port=80/tcp --permanent</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> firewall-cmd --reload</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到如图，则表示安装成功，部署过程中遇到任何问题，可以查看apache的错误日志：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat /var/<span class="built_in">log</span>/httpd/error.log</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="http://lutim.cpy.re/qebP1wbQ" alt=""></p>
+</li>
+<li><p>安装openVPN以及OpenVPN-admin</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装bower</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> npm install -g bower</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装openvpn</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> dnf install openvpn</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装openvpn-admin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir ~/my_coding_workspace &amp;&amp; <span class="built_in">cd</span> ~/my_coding_workspace</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/Chocobozzz/OpenVPN-Admin openvpn-admin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> openvpn-admin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./install.sh /var/www/html apache apache</span></span><br><span class="line"><span class="meta">#</span><span class="bash">安装失败删除重试，执行如下命令删除</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ./desinstall.sh /var/www/html </span></span><br><span class="line"><span class="meta">#</span><span class="bash">如果有前端的包安装失败，可以使用更新继续安装，也可以使用该脚本更新，不过貌似作者已经不维护了，建议熟悉php的童鞋可以继续更新</span></span><br><span class="line"><span class="meta">$</span><span class="bash">  ./update.sh /var/www/html</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在浏览器中进行安装，注意此步骤之前一定不要启动openvpn-server@server</span></span><br><span class="line">http://172.16.18.186/openvpn-admin/index.php?installation</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动openvpn-server</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 修改开机启动脚本的工作目录，这里是因为我们的工作目录配置不一样</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> vim /usr/lib/systemd/system/openvpn-server\@.service</span></span><br><span class="line"><span class="meta">#</span><span class="bash">将工作目录改为他的父级目录</span></span><br><span class="line">WorkingDirectory=/etc/openvpn</span><br><span class="line"><span class="meta">#</span><span class="bash">--explicit-exit-notify can only be used with --proto udp;此错误需要注释掉配置文件中的配置</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> vim /etc/openvpn/server.conf</span></span><br><span class="line"><span class="meta">#</span><span class="bash">explicit-exit-notify 1  注释此行</span></span><br><span class="line"><span class="meta">#</span><span class="bash">继续修改DNS配置，确保域名解析的正确性</span></span><br><span class="line">push "dhcp-option DNS 223.5.5.5"</span><br><span class="line">push "dhcp-option DNS 223.6.6.6"</span><br><span class="line"><span class="meta">#</span><span class="bash">重启openvpn</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> systemctl restart openvpn-server@server</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置防火墙转发规则-当然你可以选择关闭防火墙</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">如果使用iptables的话，请这样设置规则</span></span><br><span class="line">iptables -I FORWARD -i tun0 -j ACCEPT</span><br><span class="line">iptables -I FORWARD -o tun0 -j ACCEPT</span><br><span class="line">iptables -I OUTPUT -o tun0 -j ACCEPT</span><br><span class="line"></span><br><span class="line">iptables -A FORWARD -i tun0 -o $primary_nic -j ACCEPT</span><br><span class="line">iptables -t nat -A POSTROUTING -o $primary_nic -j MASQUERADE</span><br><span class="line">iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o $primary_nic -j MASQUERADE</span><br><span class="line">iptables -t nat -A POSTROUTING -s 10.8.0.2/24 -o $primary_nic -j MASQUERADE</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"><span class="meta">#</span><span class="bash">如果使用firewalld，可以如此设置规则</span></span><br><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br><span class="line">firewall-cmd --zone=public --add-port=443/tcp --permanent</span><br><span class="line">firewall-cmd --permanent --direct --passthrough ipv4 -t nat -A POSTROUTING -s 10.8.0.0/24 -o ens160 -j MASQUERADE</span><br><span class="line">firewall-cmd --zone=public --add-port=53/tcp --permanent</span><br><span class="line">firewall-cmd --permanent --add-service openvpn</span><br><span class="line">firewall-cmd --permanent --zone=public --add-masquerade</span><br><span class="line">firewall-cmd --reload</span><br><span class="line">firewall-cmd --query-masquerade</span><br><span class="line">firewall-cmd --list-all</span><br><span class="line">firewall-cmd --list-services</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>生成证书文件</p>
+<p>在浏览器中下载配置文件。如下图所示：</p>
+<p><img src="http://lutim.cpy.re/oqAs8tVH" alt=""></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">由于这里我们使用的openvpn-connect的gui客户端，需要合成pkcs12证书给此客户端使用。而我们所下载的配置压缩包中，只需要使用client.ovpn的配置文件即可。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /etc/openvpn/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> openssl pkcs12 -<span class="built_in">export</span> -<span class="keyword">in</span> server.crt -inkey server.key -certfile ca.crt -name MyClient -out client.p12</span></span><br><span class="line"><span class="meta">#</span><span class="bash">PS:此时你可以选择输入密码，或者不输密码也行。单纯为了证书加密使用。</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+</li>
+</ul>
+<h3 id="客户端部署"><a href="#客户端部署" class="headerlink" title="客户端部署"></a>客户端部署</h3><ul>
+<li><p>下载地址为：<code>https://openvpn.net/client-connect-vpn-for-windows/</code> 可以选择windows 客户端或者Mac客户端；我这里使用的是windows 客户端。</p>
+</li>
+<li><p>先配置证书，具体步骤如下图所示：</p>
+<p><img src="https://lutim.cpy.re/ftbTjwC2" alt="第一步"></p>
+<p><img src="https://lutim.cpy.re/5NBhkPzm" alt="第二步"></p>
+<p><img src="https://lutim.cpy.re/XQkQIgj8" alt="第三步"></p>
+<p><img src="https://lutim.cpy.re/48XTQAIh" alt="第四步"></p>
+</li>
+<li><p>导入配置文件</p>
+<p><img src="https://lutim.cpy.re/2rS5xMQt" alt="第一步"></p>
+</li>
+</ul>
+<p>  <img src="http://lutim.cpy.re/2lgAQ5b5" alt="第二步"></p>
+<p>  <img src="http://lutim.cpy.re/C7x1qe1C" alt="第三步"></p>
+<p>  <img src="http://lutim.cpy.re/uliUp8kX" alt="第四步"></p>
+<p>  <img src="http://lutim.cpy.re/xnuUU6ap" alt="第五步"></p>
+<p>  <img src="http://lutim.cpy.re/kxM1TJZB" alt="连通性测试"></p>
+<p>至此所有的步骤都已经完成了。</p>
+<h3 id="客户端能够上网的关键参数"><a href="#客户端能够上网的关键参数" class="headerlink" title="客户端能够上网的关键参数"></a>客户端能够上网的关键参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 防火墙的配置转发</span><br><span class="line">2. 配置文件中的配置，如下 </span><br><span class="line">   push &quot;redirect-gateway def1&quot;</span><br><span class="line">   push &quot;dhcp-option DNS 10.8.0.1&quot;</span><br></pre></td></tr></table></figure>
+
+<p>一键安装脚本</p>
+<ul>
+<li><a href="https://gist.github.com/aykutcan" target="_blank" rel="noopener">https://gist.github.com/aykutcan</a>  个人未验证</li>
+</ul>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://linux.cn/article-3407-1.html" target="_blank" rel="noopener">https://linux.cn/article-3407-1.html</a></li>
+<li><a href="https://github.com/skymyyang/OpenVPN-Admin" target="_blank" rel="noopener">https://github.com/skymyyang/OpenVPN-Admin</a></li>
+<li><a href="https://openvpn.net/faq/how-do-i-use-a-client-certificate-and-private-key-from-the-android-keychain/" target="_blank" rel="noopener">https://openvpn.net/faq/how-do-i-use-a-client-certificate-and-private-key-from-the-android-keychain/</a></li>
+</ul>
+<p>客户端下载地址：</p>
+<ul>
+<li><a href="http://vpn.hxu.edu.cn/openvpn.html#WIN" target="_blank" rel="noopener">http://vpn.hxu.edu.cn/openvpn.html#WIN</a></li>
+<li><a href="https://openvpn.net/client-connect-vpn-for-mac-os/" target="_blank" rel="noopener">https://openvpn.net/client-connect-vpn-for-mac-os/</a>  官网</li>
+</ul>
+<p>本人的机构信息填写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#机构信息填写</span><br><span class="line">Key size (1024, 2048 or 4096) [2048]: </span><br><span class="line">Root certificate expiration (in days) [3650]:   </span><br><span class="line">Certificate expiration (in days) [3650]: </span><br><span class="line">Country Name (2 letter code) [US]: CN</span><br><span class="line">State or Province Name (full name) [California]: JS</span><br><span class="line">Locality Name (eg, city) [San Francisco]: SZ </span><br><span class="line">Organization Name (eg, company) [Copyleft Certificate Co]: MOFANGGE</span><br><span class="line">Organizational Unit Name (eg, section) [My Organizational Unit]: DEVOPS</span><br><span class="line">Email Address [me@example.net]: developer@mofangge.com</span><br><span class="line">Common Name (eg, your name or your server&#39;s hostname) [ChangeMe]: OPENV</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ihere.io/2020/04/13/go-mod-%E5%9F%BA%E7%A1%80%E8%AE%BE%E7%BD%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1604,7 +1833,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1615,7 +1844,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1626,7 +1855,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
