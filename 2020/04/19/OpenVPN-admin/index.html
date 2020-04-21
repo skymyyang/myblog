@@ -99,7 +99,7 @@
 <meta property="og:image" content="https://lutim.cpy.re/xnuUU6ap">
 <meta property="og:image" content="https://lutim.cpy.re/kxM1TJZB">
 <meta property="article:published_time" content="2020-04-19T12:20:00.000Z">
-<meta property="article:modified_time" content="2020-04-20T09:03:56.635Z">
+<meta property="article:modified_time" content="2020-04-21T06:37:36.569Z">
 <meta property="article:author" content="ihere">
 <meta property="article:tag" content="OpenVPN">
 <meta name="twitter:card" content="summary">
@@ -415,6 +415,28 @@
 <p>  <img src="https://lutim.cpy.re/xnuUU6ap" alt="第五步"></p>
 <p>  <img src="https://lutim.cpy.re/kxM1TJZB" alt="连通性测试"></p>
 <p>至此所有的步骤都已经完成了。</p>
+<h3 id="tun模式以及tap模式的区别"><a href="#tun模式以及tap模式的区别" class="headerlink" title="tun模式以及tap模式的区别"></a>tun模式以及tap模式的区别</h3><p>OpenVPNserver 配置完成之后，我们可以在配置文件中可以看到OpenVPN默认工作在tun模式下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 通过网卡我们可以看到tun0，如果是tap模式的话，应该是tap0的网卡</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ip ad sh</span></span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens160: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:be:95:92 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 172.16.18.186/24 brd 172.16.18.255 scope global noprefixroute ens160</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::8a10:339c:e9b3:9943/64 scope link noprefixroute </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">4: tun0: &lt;POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UNKNOWN group default qlen 100</span><br><span class="line">    link/none </span><br><span class="line">    inet 10.8.0.1 peer 10.8.0.2/32 scope global tun0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::e92d:66d7:30b3:e5ca/64 scope link stable-privacy </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>tun模式</strong></p>
+<p><code>&quot;dev tun&quot; will create a routed IP tunnel,</code>将创建可路由的 IP 隧道</p>
+<p>基本在所有设备上都支持</p>
+<p>可以透过wlan</p>
+<p>不会在所有网段上广播报文(广播风暴不过网关，这应该是常识了)</p>
+<p>tun模式的特征是三层打通，你可以当作没有二层数据。tap会处理以太网mac层；而tun不处理mac层；TUN 没有任何封装。</p>
+<p>因此从拨入用户那里去问内网IP的mac是多少，根本没人理你。你必须将包发到vpn网关上，交由网关转交。目标服务器还得知道回这个数据的时候，网关是vpn网关，而不是默认网关。当然，有的时候两者其实是一个，例如vpn网关在默认网关上。或者不修改每台机器配置，直接在网关上做第二跳指向。</p>
+<p>在 tun 模式下，protocol stack –&gt; tun/tap 时 protocol packet 不需要增<br>加任何东西，直接传给 tun/tap</p>
+<p>从性能上来讲 tun 的性能要好于 tap，因为没有额外的封装过程</p>
+</li>
+<li><p><strong>tap模式</strong></p>
+<p>tap模式的特点是二层打通。典型场景是从外部打一条隧道到本地网络。进来的机器就像本地的机器一样参与通讯，你分毫看不出这些机器是在远程。</p>
+<p>tap在部分设备上不支持(例如移动设备)</p>
+<p>wlan加入网桥后不一定可以工作。</p>
+<p>广播包会散发到虚拟网络中，可能极大消耗流量。</p>
+<p>不需要在所有机器上配置或者动网关</p>
+</li>
+</ul>
 <h3 id="客户端能够上网的关键参数"><a href="#客户端能够上网的关键参数" class="headerlink" title="客户端能够上网的关键参数"></a>客户端能够上网的关键参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 防火墙的配置转发</span><br><span class="line">2. 配置文件中的配置，如下 </span><br><span class="line">   push &quot;redirect-gateway def1&quot;</span><br><span class="line">   push &quot;dhcp-option DNS 10.8.0.1&quot;</span><br></pre></td></tr></table></figure>
 
 <p>一键安装脚本</p>
@@ -429,6 +451,7 @@
 <li><a href="https://www.fandenggui.com/post/centos7-install-openvpn.html" target="_blank" rel="noopener">https://www.fandenggui.com/post/centos7-install-openvpn.html</a></li>
 <li><a href="http://www.chenlianfu.com/?p=2699" target="_blank" rel="noopener">http://www.chenlianfu.com/?p=2699</a></li>
 <li><a href="https://hisoka0917.github.io/linux/2017/12/21/openvpn-on-centos7/" target="_blank" rel="noopener">https://hisoka0917.github.io/linux/2017/12/21/openvpn-on-centos7/</a></li>
+<li><a href="http://blog.shell909090.org/blog/archives/2724/" target="_blank" rel="noopener">http://blog.shell909090.org/blog/archives/2724/</a></li>
 </ul>
 <p>客户端下载地址：</p>
 <ul>
@@ -626,7 +649,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用OpenVPN-Admin进行管理以及部署OpenVPN"><span class="nav-number">1.</span> <span class="nav-text">使用OpenVPN-Admin进行管理以及部署OpenVPN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单vpn扫盲"><span class="nav-number">1.1.</span> <span class="nav-text">简单vpn扫盲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于Centos8部署"><span class="nav-number">1.2.</span> <span class="nav-text">基于Centos8部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端部署"><span class="nav-number">1.3.</span> <span class="nav-text">客户端部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端能够上网的关键参数"><span class="nav-number">1.4.</span> <span class="nav-text">客户端能够上网的关键参数</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用OpenVPN-Admin进行管理以及部署OpenVPN"><span class="nav-number">1.</span> <span class="nav-text">使用OpenVPN-Admin进行管理以及部署OpenVPN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单vpn扫盲"><span class="nav-number">1.1.</span> <span class="nav-text">简单vpn扫盲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于Centos8部署"><span class="nav-number">1.2.</span> <span class="nav-text">基于Centos8部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端部署"><span class="nav-number">1.3.</span> <span class="nav-text">客户端部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tun模式以及tap模式的区别"><span class="nav-number">1.4.</span> <span class="nav-text">tun模式以及tap模式的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端能够上网的关键参数"><span class="nav-number">1.5.</span> <span class="nav-text">客户端能够上网的关键参数</span></a></li></ol></li></ol></div>
             
 
           </div>
